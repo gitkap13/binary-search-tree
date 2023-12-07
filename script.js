@@ -1,3 +1,4 @@
+const driver = require('./driver');
 
 function treeFactory(arr = []) {
   function nodeFactory(data = null, left = null, right = null) {
@@ -248,3 +249,4 @@ function treeFactory(arr = []) {
     reBalance,
   };
 }
+driver();
