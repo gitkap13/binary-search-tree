@@ -1,5 +1,3 @@
-const driver = require('./driver');
-
 function treeFactory(arr = []) {
   function nodeFactory(data = null, left = null, right = null) {
     return { data, left, right };
@@ -249,4 +247,55 @@ function treeFactory(arr = []) {
     reBalance,
   };
 }
+
+// driver to test bst
+function driver() {
+  function createArray() {
+    let arr = [];
+    for (let i = 0; i < 10; i++) {
+      arr.push(Math.floor(Math.random() * 100));
+    }
+    return arr;
+  }
+  let arr = createArray();
+  arr = [...new Set(arr)];
+  console.log('Random array of 10 numbers created', arr);
+  let testTree = treeFactory(arr);
+  prettyPrint(testTree.root);
+  console.log(`Tree balanced: `, testTree.isBalanced());
+  console.log(`Level Order Traversal:`, testTree.levelOrder());
+  console.log(`InOrder Traversal:`, testTree.inOrder());
+  console.log(`PreOrder Traversal:`, testTree.preOrder());
+  console.log(`PostOrder Traversal:`, testTree.postOrder());
+  testTree.insertNode(101);
+  testTree.insertNode(102);
+  testTree.insertNode(103);
+  console.log('Added values 101, 102, 103 to unbalance tree')
+  prettyPrint(testTree.root);
+  console.log(`Tree balanced: `, testTree.isBalanced());
+  testTree.reBalance();
+  console.log(`Tree rebalanced with reBalance function`);
+  prettyPrint(testTree.root);
+  console.log(`Tree balanced: `, testTree.isBalanced());
+  console.log(`Level Order Traversal:`, testTree.levelOrder());
+  console.log(`InOrder Traversal:`, testTree.inOrder());
+  console.log(`PreOrder Traversal:`, testTree.preOrder());
+  console.log(`PostOrder Traversal:`, testTree.postOrder());
+}; 
+
+// prettyPrint function supplied by The Odin Project
+// logs visual tree display in console
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+
 driver();
